@@ -340,6 +340,10 @@ Ask follow-up questions about the uploaded document.
 # 👥 Team
 
 **Claude Coders**
+Manan Dudeja
+Arnav Thapliyal
+Akshat Singh
+Pulkit Taneja
 
 Built for **Build with Gemma Hackathon** hosted by **GDG VIT Chennai**.
 
