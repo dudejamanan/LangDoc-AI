@@ -15,7 +15,7 @@ const LOCALES = { ta: 'ta-IN', hi: 'hi-IN', en: 'en-IN' }
  * Falls back to a text input if the browser has no SpeechRecognition
  * support, or if the microphone permission is denied.
  */
-export default function VoiceQA({ language, copy, documentContext }) {
+export default function VoiceQA({ language, copy, sessionId }) {
   const [history, setHistory] = useState([])
   const [listening, setListening] = useState(false)
   const [loadingAnswer, setLoadingAnswer] = useState(false)
@@ -41,7 +41,7 @@ export default function VoiceQA({ language, copy, documentContext }) {
     setError(null)
     setLoadingAnswer(true)
     try {
-      const data = await askQuestion(trimmed, documentContext, language)
+      const data = await askQuestion(trimmed, sessionId)
       setHistory((h) => [
         ...h,
         {

@@ -14,6 +14,7 @@ import LoadingScreen from './components/LoadingScreen.jsx'
 import ResultCard from './components/ResultCard.jsx'
 import AudioPlayer from './components/AudioPlayer.jsx'
 import VoiceQA from './components/VoiceQA.jsx'
+import Guide from './components/Guide.jsx'
 import { COPY, WELCOME_TRIO, WELCOME_PURPOSE, BRAND_NAME } from './content.js'
 import { explainDocument } from './services/api.js'
 
@@ -53,6 +54,7 @@ export default function App() {
   const [theme, setTheme] = useState(getInitialTheme)
   const [image, setImage] = useState(null) // { file, previewUrl }
   const [result, setResult] = useState(null)
+  const [sessionId, setSessionId] = useState(null)
 
   useEffect(() => {
     const root = document.documentElement
@@ -74,6 +76,7 @@ export default function App() {
     setLanguage(null)
     setImage(null)
     setResult(null)
+    setSessionId(null)
     setScreen(SCREENS.WELCOME)
   }
 
@@ -92,6 +95,7 @@ export default function App() {
     try {
       const data = await explainDocument(image?.file, language)
       setResult(data)
+      setSessionId(data.session_id)
       setScreen(SCREENS.RESULT)
     } catch (err) {
       setScreen(SCREENS.UPLOAD)
@@ -102,6 +106,7 @@ export default function App() {
     if (image?.previewUrl) URL.revokeObjectURL(image.previewUrl)
     setImage(null)
     setResult(null)
+    setSessionId(null)
     setScreen(SCREENS.UPLOAD)
   }
 
@@ -170,7 +175,11 @@ export default function App() {
 
                 <AudioPlayer src={result.audio_url} label={copy.listenLabel} playAgainLabel={copy.playAgain} />
 
-                <VoiceQA language={language} copy={copy} documentContext={result} />
+                {result.document_category === 'form' && result.sections && result.sections.length > 0 && (
+                  <Guide sessionId={sessionId} copy={copy} />
+                )}
+
+                <VoiceQA language={language} copy={copy} sessionId={sessionId} />
 
                 <motion.button
                   type="button"

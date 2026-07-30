@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
@@ -52,11 +53,7 @@ async def ask(request: AskRequest):
         language
     )
 
-    audio_url = audio_path.replace(
-        "app",
-        "/static",
-        1
-    )
+    audio_url = "/static/audio/" + os.path.basename(audio_path)
 
     # -----------------------------
     # Return
