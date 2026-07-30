@@ -6,6 +6,7 @@ from google import genai
 from PIL import Image
 
 from app.services.prompts import SYSTEM_PROMPT, build_prompt
+from app.utils.parser import extract_json
 
 # -------------------------
 # Load Environment Variables
@@ -49,11 +50,22 @@ def explain_document(image_path: str, language: str):
             ]
         )
 
-        return json.loads(response.text)
+        return extract_json(response.text)
 
     except Exception as e:
 
         return {
 
+            "document_type": None,
+            "language_detected": None,
+            "summary": None,
+            "action_required": None,
+            "deadline": None,
+            "priority": None,
+            "urgency_reason": None,
+            "estimated_time": None,
+            "documents_required": None,
+            "key_points": None,
+            "english_gloss": None,
             "error": str(e)
         }
