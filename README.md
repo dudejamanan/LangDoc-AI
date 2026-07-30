@@ -2,7 +2,15 @@
 
 > **AI-powered multilingual document assistant that helps elderly and low-literacy users understand official documents and complete forms through voice-guided assistance.**
 
+**Deployed Frontend Link:** https://lang-doc-ai.vercel.app/
+ 
+**Deployed Backend Link:** https://langdoc-ai.onrender.com
+ 
+**Demo Video**: https://youtu.be/xigxZP00VVE
+
 Built for **Build with Gemma Hackathon (GDG VIT Chennai)** using **Gemma 4**.
+
+
 
 ---
 
