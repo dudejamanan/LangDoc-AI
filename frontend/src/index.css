@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background-color: #F5F4EF;
+  background-image: linear-gradient(rgba(245, 244, 239, 0.67), rgba(245, 244, 239, 0.67)), url('/document-bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #0B2942;
+  font-family: 'PT Sans', 'Noto Sans Tamil', 'Noto Sans Devanagari', Verdana, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease, background-image 0.25s ease;
+}
+
+html.dark body {
+  background-color: #081627;
+  background-image: linear-gradient(rgba(8, 22, 39, 0.91), rgba(8, 22, 39, 0.91)), url('/document-bg.jpg');
+  color: #EEF3F8;
+}
+
+/* language-aware script stacks so Tamil/Hindi render with proper native shaping */
+.lang-ta {
+  font-family: 'Noto Sans Tamil', 'PT Sans', system-ui, sans-serif;
+}
+.lang-hi {
+  font-family: 'Noto Sans Devanagari', 'PT Sans', system-ui, sans-serif;
+}
+/* serif variants for large display headings in Tamil / Hindi */
+.lang-ta-serif {
+  font-family: 'Noto Serif Tamil', 'Merriweather', serif;
+}
+.lang-hi-serif {
+  font-family: 'Noto Serif Devanagari', 'Merriweather', serif;
+}
+
+/* visible keyboard focus for accessibility */
+:focus-visible {
+  outline: 3px solid #F2A93B;
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #C7DDF3;
+  border-radius: 999px;
+}
