@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.routes.explain import router as explain_router
-# from app.routes.ask import router as ask_router   # Stretch Goal
+from app.routes.guide import router as guide_router
+from app.routes.ask import router as ask_router
 
 app = FastAPI(
     title="LangDoc API",
@@ -52,6 +53,18 @@ app.include_router(
 # ----------------------------
 # Root Endpoint
 # ----------------------------
+
+app.include_router(
+    guide_router,
+    prefix="/api",
+    tags=["Guide"]
+)
+
+app.include_router(
+    ask_router,
+    prefix="/api",
+    tags=["Ask"]
+)
 
 @app.get("/")
 def root():

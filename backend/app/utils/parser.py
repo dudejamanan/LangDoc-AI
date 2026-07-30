@@ -8,29 +8,27 @@ def extract_json(response_text: str):
 
     Handles:
     - Plain JSON
-    - Markdown-wrapped JSON
-    - Extra text before/after JSON
-
-    Returns:
-        dict
-    Raises:
-        ValueError
+    - Markdown wrapped JSON
+    - Extra text before JSON
+    - Extra text after JSON
+    - Multiple lines
     """
 
-    # -------------------------
-    # Case 1
-    # Already valid JSON
-    # -------------------------
+    if not response_text:
+        raise ValueError("Empty response received from model.")
+
+    # ---------------------------------
+    # Try parsing directly
+    # ---------------------------------
 
     try:
         return json.loads(response_text)
     except Exception:
         pass
 
-    # -------------------------
-    # Case 2
+    # ---------------------------------
     # Remove Markdown
-    # -------------------------
+    # ---------------------------------
 
     cleaned = (
         response_text
@@ -44,22 +42,28 @@ def extract_json(response_text: str):
     except Exception:
         pass
 
-    # -------------------------
-    # Case 3
-    # Find first JSON object
-    # -------------------------
+    # ---------------------------------
+    # Extract first JSON object
+    # ---------------------------------
 
     match = re.search(
-        r"\{.*\}",
-        cleaned,
-        re.DOTALL
+        r"\{[\s\S]*\}",
+        cleaned
     )
 
     if match:
 
+        json_text = match.group()
+
         try:
-            return json.loads(match.group())
+            return json.loads(json_text)
         except Exception:
             pass
 
-    raise ValueError("Could not parse JSON response.")
+    # ---------------------------------
+    # Nothing worked
+    # ---------------------------------
+
+    raise ValueError(
+        f"Could not parse JSON.\n\nModel Output:\n{response_text}"
+    )
